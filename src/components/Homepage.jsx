@@ -9,22 +9,21 @@ const HomePage = () => {
           {/* Left: Logo */}
           <div className="w-16 h-16 bg-gray-400 rounded-full flex items-center justify-center">
             <span className="font-bold text-white">Logo </span>
-            
           </div>
 
           {/* Middle: Navigation and Search */}
           <div className="flex flex-1 items-center justify-between mx-4">
             <nav className="flex space-x-4 text-md font-medium">
-              <a href="#" className="hover:text-blue-500 hover:underline">
+              <a href="#" className="hover:text-gray-700 hover:underline hover:font-bold">
                 Shop by Interests
               </a>
-              <a href="#" className="hover:text-blue-500 hover:underline">
+              <a href="#" className="hover:text-gray-700 hover:underline hover:font-bold ">
                 Explore
               </a>
-              <a href="#" className="hover:text-blue-500 hover:underline">
+              <a href="#" className="hover:text-gray-700 hover:underline hover:font-bold">
                 Collections
               </a>
-              <a href="#" className="hover:text-blue-500 hover:underline">
+              <a href="#" className="hover:text-gray-700 hover:underline hover:font-bold">
                 Shop by Trends
               </a>
             </nav>
@@ -79,7 +78,9 @@ const HomePage = () => {
       <footer className="bg-green-200 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
           <p className="text-sm text-gray-600">Copyright © 2024</p>
-          <p className="text-sm text-gray-600 hover:underline">Artisan: Handmade by Tejas</p>
+          <p className="text-sm text-gray-600 hover:underline">
+            Artisan: From Heart to Home
+          </p>
           <input
             type="email"
             placeholder="tejas@gmail.com"
