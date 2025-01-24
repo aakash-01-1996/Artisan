@@ -7,6 +7,7 @@ import Cart from "./pages/Cart";
 import ContactUs from "./pages/ContactUs";
 import LoginPage from "./pages/LoginPage";
 import { CartProvider } from "./contexts/CartContext";
+import KitchenWare from "./pages/KitchenWare";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home-decor" element={<HomeDecor />} />
+          <Route path="/kitchen-ware" element={<KitchenWare />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/login" element={<LoginPage />} />

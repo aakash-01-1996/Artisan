@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { useCart } from "../contexts/CartContext";
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
   const [quantity, setQuantity] = useState(0);
-  const { addToCart } = useCart();
 
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 0 ? prev - 1 : 0));
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
-    setQuantity(0); // Reset quantity after adding to cart
+    if (quantity > 0) {
+      addToCart(product, quantity);
+      setQuantity(0); // Reset quantity after adding to cart
+    } else {
+      alert("Please select a quantity to add to cart.");
+    }
   };
 
   return (
@@ -39,10 +41,7 @@ function ProductCard({ product }) {
         </div>
         <button
           onClick={handleAddToCart}
-          className={`bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 ${
-            quantity > 0 ? "" : "opacity-50 cursor-not-allowed"
-          }`}
-          disabled={quantity <= 0}
+          className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600"
         >
           Add to Cart
         </button>
