@@ -1,24 +1,39 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
 import { FaUserCircle } from "react-icons/fa";
+import { auth } from "../firebase";
 
 function Navbar() {
   const { cart } = useCart();
-  const [showHomeDecorDropdown, setShowHomeDecorDropdown] = useState(false);
-  const [showKitchenWareDropdown, setShowKitchenWareDropdown] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
-  const homeDecorProducts = [
-    { id: 1, name: "Wall Art" },
-    { id: 2, name: "Vases" },
-    { id: 3, name: "Table Lamps" },
-  ];
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        setUser({
+          name: currentUser.displayName,
+          email: currentUser.email,
+        });
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
-  const kitchenWareProducts = [
-    { id: 4, name: "Plates" },
-    { id: 5, name: "Bowls" },
-    { id: 6, name: "Mugs" },
-  ];
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      alert("You have been logged out.");
+      setShowDropdown(false);
+      navigate("/"); // Redirect to HomePage
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  };
 
   return (
     <nav className="bg-zinc-600 p-4 text-white flex items-center justify-between">
@@ -34,60 +49,40 @@ function Navbar() {
 
       {/* Center Section: Navigation Links */}
       <div className="flex space-x-8">
-        <div className="relative">
-          <Link
-            to="/home-decor"
-            className="hover:cursor-pointer"
-            onMouseEnter={() => setShowHomeDecorDropdown(true)}
-            onMouseLeave={() => setShowHomeDecorDropdown(false)}
-          >
-            Home Decor
-          </Link>
-          {showHomeDecorDropdown && (
-            <div className="absolute top-8 left-0 bg-white text-black shadow-lg p-4 rounded">
-              {homeDecorProducts.map((product) => (
-                <Link
-                  key={product.id}
-                  to={`/product/${product.id}`}
-                  className="block hover:bg-gray-200 p-2"
-                >
-                  {product.name}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="relative">
-          <Link
-            to="/kitchen-ware"
-            className="hover:cursor-pointer"
-            onMouseEnter={() => setShowKitchenWareDropdown(true)}
-            onMouseLeave={() => setShowKitchenWareDropdown(false)}
-          >
-            Kitchen Ware
-          </Link>
-          {showKitchenWareDropdown && (
-            <div className="absolute top-8 left-0 bg-white text-black shadow-lg p-4 rounded">
-              {kitchenWareProducts.map((product) => (
-                <Link
-                  key={product.id}
-                  to={`/product/${product.id}`}
-                  className="block hover:bg-gray-200 p-2"
-                >
-                  {product.name}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
+        <Link to="/home-decor" className="hover:cursor-pointer">
+          Home Decor
+        </Link>
+        <Link to="/kitchen-ware" className="hover:cursor-pointer">
+          Kitchen Ware
+        </Link>
       </div>
 
       {/* Right Section: Profile Icon and Cart */}
       <div className="flex items-center space-x-4">
-        <Link to="/login">
-          <FaUserCircle className="text-2xl cursor-pointer" />
-        </Link>
+        {user ? (
+          <div className="relative">
+            <div
+              className="flex items-center space-x-2 cursor-pointer"
+              onClick={() => setShowDropdown((prev) => !prev)}
+            >
+              <span>Hi, {user.name.split(" ")[0]}</span>
+            </div>
+            {showDropdown && (
+              <div className="absolute top-full right-0 bg-white text-black p-4 rounded shadow-lg mt-2">
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link to="/login">
+            <FaUserCircle className="text-2xl cursor-pointer" />
+          </Link>
+        )}
         <Link to="/cart" className="hover:cursor-pointer">
           Cart ({cart.length})
         </Link>

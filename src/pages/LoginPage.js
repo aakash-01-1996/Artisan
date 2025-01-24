@@ -1,14 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      alert(`Welcome, ${result.user.displayName}!`);
+      console.log("User Info:", result.user); // For debugging
+      alert(`Welcome, ${result.user.displayName || "User"}!`);
+      navigate("/"); // Redirect to HomePage
     } catch (error) {
       console.error("Google login error:", error.message);
+      alert("Failed to log in with Google. Please try again.");
     }
   };
 
@@ -21,10 +27,12 @@ function LoginPage() {
     }
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      alert(`Welcome back, ${result.user.email}!`);
+      console.log("User Info:", result.user); // For debugging
+      alert(`Welcome back, ${result.user.email || "User"}!`);
+      navigate("/"); // Redirect to HomePage
     } catch (error) {
       console.error("Email login error:", error.message);
-      alert("Login failed. Please check your credentials.");
+      alert("Login failed. Please check your email and password.");
     }
   };
 

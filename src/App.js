@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import HomeDecor from "./pages/HomeDecor";
 import KitchenWare from "./pages/KitchenWare";
 import ContactUs from "./pages/ContactUs";
-import LoginPage from "./pages/LoginPage"; // Import the LoginPage
+import LoginPage from "./pages/LoginPage";
 import { CartProvider } from "./contexts/CartContext";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
           <Route path="/home-decor" element={<HomeDecor />} />
           <Route path="/kitchen-ware" element={<KitchenWare />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/login" element={<LoginPage />} /> {/* Login Page */}
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </Router>
     </CartProvider>
