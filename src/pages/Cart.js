@@ -1,15 +1,21 @@
 import React from "react";
 import { useCart } from "../contexts/CartContext";
-import axios from "axios";
 
 function Cart() {
-  const { cart, removeFromCart } = useCart();
+  const { cart, updateQuantity, removeFromCart } = useCart();
 
-  const handleCheckout = async () => {
-    const response = await axios.post("http://localhost:5000/send-email", {
-      cart,
-    });
-    alert(response.data.message);
+  const handleIncrement = (productId) => {
+    const product = cart.find((item) => item.id === productId);
+    updateQuantity(productId, product.quantity + 1);
+  };
+
+  const handleDecrement = (productId) => {
+    const product = cart.find((item) => item.id === productId);
+    if (product.quantity > 1) {
+      updateQuantity(productId, product.quantity - 1);
+    } else {
+      removeFromCart(productId);
+    }
   };
 
   return (
@@ -18,31 +24,46 @@ function Cart() {
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <ul>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {cart.map((item) => (
-            <li key={item.id} className="mb-4">
+            <div
+              key={item.id}
+              className="border rounded shadow p-4 flex flex-col justify-between"
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-40 object-cover mb-4"
+              />
+              <h2 className="text-lg font-bold text-center mb-4">
+                {item.name}
+              </h2>
               <div className="flex justify-between items-center">
-                <span>
-                  {item.name} - ${item.price}
-                </span>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => handleDecrement(item.id)}
+                    className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                  >
+                    -
+                  </button>
+                  <span className="text-lg font-bold">{item.quantity}</span>
+                  <button
+                    onClick={() => handleIncrement(item.id)}
+                    className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600"
+                  >
+                    +
+                  </button>
+                </div>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700"
+                  className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-600"
                 >
                   Remove
                 </button>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
-      )}
-      {cart.length > 0 && (
-        <button
-          onClick={handleCheckout}
-          className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 mt-6"
-        >
-          Checkout
-        </button>
+        </div>
       )}
     </div>
   );
