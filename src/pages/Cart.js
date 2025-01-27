@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "../contexts/CartContext";
+import confetti from "canvas-confetti"; // Add confetti for celebration
 
 function Cart() {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
   const [activeTab, setActiveTab] = useState(null);
+  const [orderSuccess, setOrderSuccess] = useState(false);
 
   // Group items by category
   const groupedCart = cart.reduce((acc, item) => {
@@ -26,11 +28,38 @@ function Cart() {
     }
   }, [categories, activeTab]);
 
+  const handleSubmitOrder = () => {
+    // Combine all cart items into a single order summary
+    const orderSummary = cart
+      .map((item) => `${item.name} (x${item.quantity})`)
+      .join(", ");
+
+    // Email details (adjust email address as needed)
+    const emailBody = `Order Details:\n\n${orderSummary}\n\nThank you for your order!`;
+    const mailToLink = `mailto:your-email@example.com?subject=New Order&body=${encodeURIComponent(
+      emailBody
+    )}`;
+
+    // Simulate sending an email
+    window.location.href = mailToLink;
+
+    // Show confetti and success message
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+    setOrderSuccess(true);
+
+    // Clear the cart after submission
+    clearCart();
+  };
+
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
       {categories.length === 0 ? (
-        <p>Your cart is empty. Let's explore. </p>
+        <p>Your cart is empty. Let's explore.</p>
       ) : (
         <>
           {/* Tabs */}
@@ -52,7 +81,7 @@ function Cart() {
 
           {/* Active Tab Content */}
           {activeTab && groupedCart[activeTab] && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {groupedCart[activeTab].map((item) => (
                 <div
                   key={item.id}
@@ -95,6 +124,23 @@ function Cart() {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Submit Order Button */}
+          <div className="text-center">
+            <button
+              onClick={handleSubmitOrder}
+              className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600"
+            >
+              Submit Your Order
+            </button>
+          </div>
+
+          {/* Success Message */}
+          {orderSuccess && (
+            <div className="mt-4 text-center text-green-500 font-bold">
+              Thank you! Our team will get back to you in 2-3 working days.
             </div>
           )}
         </>

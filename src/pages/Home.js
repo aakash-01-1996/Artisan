@@ -5,7 +5,7 @@ function Home() {
   return (
     <div className="p-2">
       {/* Hero Section */}
-      <div className="bg-green-800 text-white py-16 text-center">
+      <div className="bg-neutral-400 text-white py-16 text-center">
         <h1 className="text-4xl font-serif">
           One stop solution for all carefully curated earthenware.
         </h1>
@@ -122,7 +122,7 @@ function Home() {
       </div>
 
       {/* Footer Section */}
-      <footer className="bg-gray-600 text-white py-2 mt-16">
+      <footer className="bg-gray-900 text-white py-2 mt-16">
         <div className="flex flex-col sm:flex-row items-center justify-between px-8">
           <div className="text-sm"> 🇮🇳 Made in India</div>
           <div className="text-sm text-center sm:text-base">

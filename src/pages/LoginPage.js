@@ -1,17 +1,19 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation(); // Capture the current location
+  const from = location.state?.from || "/"; // Default to home page if no referrer
 
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("User Info:", result.user); // For debugging
+      console.log("User Info:", result.user); // Debugging
       alert(`Welcome, ${result.user.displayName || "User"}!`);
-      navigate("/"); // Redirect to HomePage
+      navigate(from); // Navigate to the previous page
     } catch (error) {
       console.error("Google login error:", error.message);
       alert("Failed to log in with Google. Please try again.");
@@ -27,9 +29,9 @@ function LoginPage() {
     }
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User Info:", result.user); // For debugging
+      console.log("User Info:", result.user); // Debugging
       alert(`Welcome back, ${result.user.email || "User"}!`);
-      navigate("/"); // Redirect to HomePage
+      navigate(from); // Navigate to the previous page
     } catch (error) {
       console.error("Email login error:", error.message);
       alert("Login failed. Please check your email and password.");
@@ -37,7 +39,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-[80vh] bg-gray-100">
       <div className="bg-white shadow-lg p-8 rounded-lg w-full max-w-md text-center border border-gray-300">
         <h1 className="text-2xl font-bold mb-6">Login</h1>
         <button

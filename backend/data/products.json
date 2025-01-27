@@ -1,0 +1,5 @@
+[
+    { "id": 1, "name": "Terracotta Plate", "price": 15.99, "image": "plate.jpg" },
+    { "id": 2, "name": "Terracotta Bowl", "price": 9.99, "image": "bowl.jpg" }
+  ]
+  

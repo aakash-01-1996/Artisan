@@ -8,6 +8,8 @@ import ContactUs from "./pages/ContactUs";
 import LoginPage from "./pages/LoginPage";
 import { CartProvider } from "./contexts/CartContext";
 import KitchenWare from "./pages/KitchenWare";
+import ImageUpload from "./components/ImageUpload";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/image-upload" element={<ImageUpload />} />
         </Routes>
       </Router>
     </CartProvider>

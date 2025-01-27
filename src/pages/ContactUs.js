@@ -26,7 +26,7 @@ function ContactUs() {
     <div className="p-8 grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
       {/* Left Half: Contact Us */}
       <div className="pr-4">
-        <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
+        <h1 className="text-3xl font-serif font-bold mb-6">Contact Us</h1>
         <p className="mb-4 text-gray-700">
           If you have any questions, feel free to reach out using the form
           below.
@@ -96,7 +96,7 @@ function ContactUs() {
 
       {/* Right Half: About Us */}
       <div className="pl-4">
-        <h1 className="text-3xl font-bold mb-6">About Us</h1>
+        <h1 className="text-3xl font-serif font-bold mb-6">About Us</h1>
         <p className="mb-4 text-gray-700">
           At Artisan, we pride ourselves on creating handcrafted earthenware and
           home decor pieces that bring warmth and elegance to your living space.

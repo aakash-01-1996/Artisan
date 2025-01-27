@@ -27,21 +27,21 @@ function ProductCard({ product, addToCart }) {
         <div className="flex items-center space-x-2">
           <button
             onClick={decrement}
-            className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+            className="bg-gray-500 text-white py-1 px-3 rounded hover:bg-red-600"
           >
             -
           </button>
           <span className="text-lg font-bold">{quantity}</span>
           <button
             onClick={increment}
-            className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600"
+            className="bg-gray-500 text-white py-1 px-3 rounded hover:bg-green-600"
           >
             +
           </button>
         </div>
         <button
           onClick={handleAddToCart}
-          className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600"
+          className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-blue-600"
         >
           Add to Cart
         </button>
