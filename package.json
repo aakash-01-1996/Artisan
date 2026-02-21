@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "^10.4.20",
-    "axios": "^1.7.9",
+    "axios": "^1.13.5",
     "canvas-confetti": "^1.9.3",
     "cloudinary": "^2.5.1",
     "cors": "^2.8.5",
